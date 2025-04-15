@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/adarsh-pandey12/handson53'
+            }
+        }
+        stage('Run JMeter Test') {
+            steps {
+                sh 'jmeter -n -t Jpet_recording_using_blazemeter.jmx -l result.jtl'
+            }
+        }
+    }
+}
+ 
