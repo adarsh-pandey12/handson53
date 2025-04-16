@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/adarsh-pandey12/handson53'
+                git 'https://github.com/adarsh-pandey12/handson53.git'
             }
         }
         stage('Run JMeter Test') {
