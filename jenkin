@@ -3,14 +3,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/adarsh-pandey12/handson53.git'
+                git credentialsId: 'git-ada', branch: 'main', url: 'https://github.com/adarsh-pandey12/handson53.git'
             }
         }
         stage('Run JMeter Test') {
             steps {
-                sh 'jmeter -n -t Jpet_recording_using_blazemeter.jmx -l result.jtl'
+                sh '/path/to/jmeter -n -t Jpet_recording_using_blazemeter.jmx -l result.jtl'
             }
         }
     }
 }
- 
