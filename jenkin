@@ -1,42 +1,16 @@
 pipeline {
     agent any
-
-    environment {
-        JMETER_SCRIPT = 'Jpet_recording_using_blazemeter.jmx'
-        RESULTS_FILE = 'result.jtl'
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/adarsh-pandey12/handson53.git'
+                git 'https://github.com/adarsh-pandey12/handson53.git'
             }
         }
         stage('Run JMeter Test') {
             steps {
-                sh "jmeter -n -t ${JMETER_SCRIPT} -l ${RESULTS_FILE}"
+                sh 'jmeter -n -t Jpet_recording_using_blazemeter.jmx -l result.jtl'
             }
-        }
-        stage('Archive Results') {
-            steps {
-                archiveArtifacts artifacts: "${RESULTS_FILE}", allowEmptyArchive: true
-            }
-        }
-    }
-
-    post {
-        always {
-            emailext(
-                to: "${params.EMAIL_RECIPIENTS}",
-                subject: "Build ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """Build ${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}\n\nCheck console output at ${env.BUILD_URL} to view the results."""
-            )
-        }
-        success {
-            echo 'Pipeline succeeded.'
-        }
-        failure {
-            echo 'Pipeline failed.'
         }
     }
 }
+ 
